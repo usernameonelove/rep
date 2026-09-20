@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#0f1115">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Progress">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="style.css">
+  <title>Progress</title>
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <div>
+        <div class="eyebrow">MY PROGRESS</div>
+        <h1>Мои цели</h1>
+      </div>
+      <button class="icon-btn" id="settingsBtn" aria-label="Настройки">⚙️</button>
+    </header>
+
+    <section class="overview card">
+      <div class="overview-top">
+        <div>
+          <div class="muted">Общий прогресс</div>
+          <div class="big-number" id="overallPercent">0%</div>
+        </div>
+        <div class="ring" id="overallRing"><span id="ringText">0%</span></div>
+      </div>
+      <div class="progress-track"><div class="progress-fill" id="overallBar"></div></div>
+      <div class="muted small" id="overallMeta">0 из 0 целей</div>
+    </section>
+
+    <section class="section-head">
+      <h2>На главном</h2>
+      <button class="text-btn" id="manageBtn">Настроить</button>
+    </section>
+
+    <section id="featuredGoals" class="goal-list"></section>
+    <div id="emptyFeatured" class="empty card hidden">
+      <div class="empty-icon">🎯</div>
+      <h3>Пока ничего нет</h3>
+      <p>Добавь цель и включи отображение на главном экране.</p>
+    </div>
+
+    <button class="add-main" id="addGoalBtn">＋ Добавить цель</button>
+
+    <nav class="bottom-nav">
+      <button class="nav-item active" data-page="home">⌂<span>Главная</span></button>
+      <button class="nav-item" data-page="goals">🎯<span>Цели</span></button>
+    </nav>
+  </main>
+
+  <div class="modal hidden" id="goalModal">
+    <div class="modal-box">
+      <div class="modal-head">
+        <h2 id="modalTitle">Новая цель</h2>
+        <button class="icon-btn" data-close="goalModal">✕</button>
+      </div>
+      <form id="goalForm">
+        <input type="hidden" id="goalId">
+        <label>Название
+          <input id="goalName" required maxlength="60" placeholder="Например: Изучить английский">
+        </label>
+        <label>Описание <span class="optional">необязательно</span>
+          <input id="goalDescription" maxlength="120" placeholder="Например: выучить 2000 слов">
+        </label>
+        <div class="two-col">
+          <label>Текущее
+            <input id="goalCurrent" type="number" min="0" step="any" value="0" required>
+          </label>
+          <label>Цель
+            <input id="goalTarget" type="number" min="0.000001" step="any" value="100" required>
+          </label>
+        </div>
+        <label>Единица измерения
+          <input id="goalUnit" maxlength="20" placeholder="слов, тренировок, %, км...">
+        </label>
+        <label class="check-row">
+          <input id="goalFeatured" type="checkbox" checked>
+          <span>Показывать на главном экране</span>
+        </label>
+        <button class="primary" type="submit">Сохранить</button>
+        <button class="danger ghost hidden" type="button" id="deleteGoalBtn">Удалить цель</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal hidden" id="manageModal">
+    <div class="modal-box">
+      <div class="modal-head">
+        <h2>Цели</h2>
+        <button class="icon-btn" data-close="manageModal">✕</button>
+      </div>
+      <div id="manageList" class="manage-list"></div>
+      <button class="primary" id="manageAddBtn">＋ Добавить цель</button>
+    </div>
+  </div>
+
+  <div class="modal hidden" id="settingsModal">
+    <div class="modal-box">
+      <div class="modal-head">
+        <h2>Настройки</h2>
+        <button class="icon-btn" data-close="settingsModal">✕</button>
+      </div>
+      <div class="setting-card">
+        <strong>Данные</strong>
+        <p class="muted">Все цели хранятся локально на устройстве. Интернет для работы с данными не нужен.</p>
+        <button class="secondary" id="exportBtn">Экспортировать данные</button>
+        <label class="secondary file-label">Импортировать данные<input type="file" id="importInput" accept=".json"></label>
+        <button class="danger ghost" id="resetBtn">Удалить все данные</button>
+      </div>
+      <div class="setting-card">
+        <strong>iPhone</strong>
+        <p class="muted">Открой приложение в Safari → «Поделиться» → «На экран Домой», чтобы пользоваться им как приложением.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <script src="app.js"></script>
+</body>
+</html>
